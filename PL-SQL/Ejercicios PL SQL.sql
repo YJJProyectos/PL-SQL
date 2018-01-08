@@ -63,7 +63,6 @@ IS
     IS
         cantidad NUMBER;
     BEGIN
-       -- cantidad :=  5;
         dbms_output.put_line('Entro funcion');
         FOR empleado IN ( SELECT leyenda, employee_id FROM MI_EMPLOYEES )
         LOOP 
