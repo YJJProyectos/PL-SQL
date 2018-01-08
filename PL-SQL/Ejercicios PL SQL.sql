@@ -28,7 +28,8 @@ La función devuelve true si todo salió bien o false en caso de algún error. */
 CREATE OR REPLACE PACKAGE PKG_ADM_EMPLOYEES 
 IS
     PROCEDURE PRC_INSERTAR(manager_id_search VARCHAR2);
-    
+    PROCEDURE PRC_MOSTRAR_RESULT;
+    FUNCTION FUN_SUELDO RETURN NUMBER; 
     
     
 END PKG_ADM_EMPLOYEES;
@@ -50,9 +51,30 @@ IS
             VALUES (employees_take.employee_id, employees_take.manager_id, employees_take.salary, employees_take.m_first_name || ' ' || employees_take.first_name );
         END LOOP; 
     END PRC_INSERTAR;  
-/*    PROCEDURE PRC_INSERTAR(manager_id VARCHAR2)
+    PROCEDURE PRC_MOSTRAR_RESULT
     IS 
     BEGIN 
-        dbms_output.put_line(' ENTRO ');
-    END PRC_INSERTAR; */
+        dbms_output.put_line('Entro a procedimiento'); 
+        dbms_output.put_line(TO_CHAR(FUN_SUELDO));         
+    END PRC_MOSTRAR_RESULT; 
+    
+    FUNCTION FUN_SUELDO
+    RETURN NUMBER
+    IS
+        cantidad NUMBER;
+    BEGIN
+       -- cantidad :=  5;
+        dbms_output.put_line('Entro funcion');
+        FOR empleado IN ( SELECT leyenda, employee_id FROM MI_EMPLOYEES )
+        LOOP 
+            IF 0 = MOD(empleado.employee_id, 2)
+            THEN 
+                dbms_output.put_line(empleado.leyenda);
+            
+            END IF;
+        END LOOP; 
+        SELECT COUNT(*) INTO CANTIDAD FROM MI_EMPLOYEES;
+        RETURN cantidad;
+        
+    END FUN_SUELDO; 
 END PKG_ADM_EMPLOYEES;
